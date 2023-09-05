@@ -8,11 +8,13 @@
  * </Aside>
  * ```
  */
+import imageSrc from '../../public/images/steelo-logo.png'
+
 export function Aside({children, heading, id = 'aside'}) {
   return (
-    <div aria-modal className="overlay" id={id} role="dialog">
+    <div aria-modal className="overlay text-slate-950 font-sans text-transform: uppercase" id={id} role="dialog">
       <button
-        className="close-outside"
+        className="close-outside "
         onClick={() => {
           history.go(-1);
           window.location.hash = '';
@@ -20,10 +22,11 @@ export function Aside({children, heading, id = 'aside'}) {
       />
       <aside>
         <header>
-          <h3>{heading}</h3>
+        <img  className='w-14 h-14' src={imageSrc} alt="steelo-logo" />
+          {/* <h3>{heading}</h3> */}
           <CloseAside />
         </header>
-        <main>{children}</main>
+        <main className='pl-4 w-full'>{children}</main>
       </aside>
     </div>
   );

@@ -1,16 +1,19 @@
 :root {
-  --aside-width: 400px;
+  --aside-width: 100vw;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
   --header-height: 64px;
-  --color-dark: #000;
+  /* --color-dark: #000; */
   --color-light: #fff;
 }
+
+
 
 img {
   border-radius: 4px;
 }
+
 
 /*
 * --------------------------------------------------
@@ -21,21 +24,25 @@ aside {
   background: var(--color-light);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   height: 100vh;
+  /* width: 100%; */
   max-width: var(--aside-width);
   min-width: var(--aside-width);
   position: fixed;
   right: calc(-1 * var(--aside-width));
   top: 0;
   transition: transform 200ms ease-in-out;
+  /* padding: 0 1rem; */
 }
 
 aside header {
   align-items: center;
-  border-bottom: 1px solid var(--color-dark);
+  /* border-bottom: 1px solid var(--color-dark); */
+  border-bottom: #000 solid 2px;
   display: flex;
   height: var(--header-height);
   justify-content: space-between;
   padding: 0 20px;
+  font-family: sans-serif;
 }
 
 aside header h3 {
@@ -60,6 +67,7 @@ aside header h2 {
 
 aside main {
   margin: 1rem;
+  height: auto;
 }
 
 aside p {
@@ -129,13 +137,14 @@ aside li {
 */
 .header {
   align-items: center;
-  background: #fff;
+  background: #ffffff;
   display: flex;
   height: var(--header-height);
-  padding: 0 1rem;
+  padding: 0 2rem;
   position: sticky;
   top: 0;
   z-index: 1;
+
 }
 
 .header-menu-mobile-toggle {
@@ -143,6 +152,11 @@ aside li {
     display: none;
   }
 }
+
+.mobileBtn {
+  margin-top: -7px;
+}
+
 
 .header-menu-mobile {
   display: flex;
@@ -169,6 +183,7 @@ aside li {
   display: flex;
   grid-gap: 1rem;
   margin-left: auto;
+  padding: 0 1rem;
 }
 
 /*
@@ -202,6 +217,13 @@ aside li {
 * components/Cart
 * --------------------------------------------------
 */
+.cartTesting {
+  width: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .cart-main {
   height: 100%;
   max-height: calc(100vh - var(--cart-aside-summary-height));
@@ -256,8 +278,13 @@ aside li {
 * components/Search
 * --------------------------------------------------
 */
+.searchBarThings {
+  display: flex;
+  width: 100%;
+}
+
 .predictive-search {
-  height: calc(100vh - var(--header-height) - 40px);
+  height: 100vh;
   overflow-y: auto;
 }
 

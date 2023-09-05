@@ -1,12 +1,14 @@
-import {Await, NavLink, useMatches} from '@remix-run/react';
+import {Await, NavLink, useMatches, Form} from '@remix-run/react';
 import {Suspense} from 'react';
+
+
 
 export function Header({header, isLoggedIn, cart}) {
   const {shop, menu} = header;
   return (
     <header className="header">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+        <img  className='w-14 h-14' src='/steelo-logo.svg' alt="steelo-logo" />
       </NavLink>
       <HeaderMenu menu={menu} viewport="desktop" />
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
@@ -27,7 +29,7 @@ export function HeaderMenu({menu, viewport}) {
   }
 
   return (
-    <nav className={className} role="navigation">
+    <nav className={className}  role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
@@ -36,7 +38,7 @@ export function HeaderMenu({menu, viewport}) {
           style={activeLinkStyle}
           to="/"
         >
-          Home
+          <p className='font-sans text-transform: uppercase font-semibold text-sm'>Home</p>
         </NavLink>
       )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
@@ -50,7 +52,7 @@ export function HeaderMenu({menu, viewport}) {
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
+            className="header-menu-item font-sans text-transform: uppercase font-semibold text-sm"
             end
             key={item.id}
             onClick={closeAside}
@@ -68,31 +70,34 @@ export function HeaderMenu({menu, viewport}) {
 
 function HeaderCtas({isLoggedIn, cart}) {
   return (
-    <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
+    <nav className="header-ctas font-sans text-transform: uppercase font-semibold text-sm" role="navigation">
+      <SearchToggle/>
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
       </NavLink>
-      <SearchToggle />
       <CartToggle cart={cart} />
+      <HeaderMenuMobileToggle />
     </nav>
   );
 }
 
 function HeaderMenuMobileToggle() {
   return (
-    <a className="header-menu-mobile-toggle" href="#mobile-menu-aside">
-      <h3>☰</h3>
+    <a className="header-menu-mobile-toggle text-transform: upperrcase text-2xl" href="#mobile-menu-aside">
+      <h3 className='mobileBtn'>☰</h3>
     </a>
   );
 }
 
 function SearchToggle() {
-  return <a href="#search-aside">Search</a>;
+  return <a href="#search-aside"><img src="/search.svg" alt="" /></a>;
 }
 
 function CartBadge({count}) {
-  return <a href="#cart-aside">Cart {count}</a>;
+  return <div className='cartTesting'>
+      <a href='#cart-aside'><img src="/shopping-cart.svg" alt="" /></a>
+      <a href='#cart-aside'><p className='text-xs'>{count}</p></a>
+    </div>
 }
 
 function CartToggle({cart}) {
@@ -153,6 +158,6 @@ const FALLBACK_HEADER_MENU = {
 function activeLinkStyle({isActive, isPending}) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
+    color: isPending ? 'grey' : '#000',
   };
 }
