@@ -147,23 +147,23 @@ export function normalizePredictiveSearchResults(predictiveSearch, locale) {
     });
   }
 
-  if (predictiveSearch.collections.length) {
-    results.push({
-      type: 'collections',
-      items: predictiveSearch.collections.map((collection) => {
-        totalResults++;
-        const trackingParams = applyTrackingParams(collection);
-        return {
-          __typename: collection.__typename,
-          handle: collection.handle,
-          id: collection.id,
-          image: collection.image,
-          title: collection.title,
-          url: `${localePrefix}/collections/${collection.handle}${trackingParams}`,
-        };
-      }),
-    });
-  }
+  // if (predictiveSearch.collections.length) {
+  //   results.push({
+  //     type: 'collections',
+  //     items: predictiveSearch.collections.map((collection) => {
+  //       totalResults++;
+  //       const trackingParams = applyTrackingParams(collection);
+  //       return {
+  //         __typename: collection.__typename,
+  //         handle: collection.handle,
+  //         id: collection.id,
+  //         image: collection.image,
+  //         title: collection.title,
+  //         url: `${localePrefix}/collections/${collection.handle}${trackingParams}`,
+  //       };
+  //     }),
+  //   });
+  // }
 
   if (predictiveSearch.pages.length) {
     results.push({

@@ -202,8 +202,7 @@ export function CartEmpty({hidden = false, layout = 'aside'}) {
     <div hidden={hidden}>
       <br />
       <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
+        
       </p>
       <br />
       <Link

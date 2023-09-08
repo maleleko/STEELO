@@ -1,5 +1,6 @@
 :root {
-  --aside-width: 100vw;
+  --aside-width: 100%;
+  --aside-height: 400px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
@@ -23,13 +24,15 @@ img {
 aside {
   background: var(--color-light);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
-  height: 100vh;
-  /* width: 100%; */
+  max-height: var(--aside-height);
+  min-height: var(--aside-height);
+  /* height: 100vh; */
+  width: 100vh;
   max-width: var(--aside-width);
   min-width: var(--aside-width);
   position: fixed;
   right: calc(-1 * var(--aside-width));
-  top: 0;
+  top: 4rem;
   transition: transform 200ms ease-in-out;
   /* padding: 0 1rem; */
 }
@@ -53,7 +56,7 @@ aside header .close {
   font-weight: bold;
   opacity: 0.8;
   text-decoration: none;
-  transition: all 200ms;
+  transition: all .7s;
   width: 20px;
   &:hover {
     opacity: 1;
@@ -90,10 +93,36 @@ aside li {
   position: fixed;
   right: 0;
   top: 0;
-  transition: opacity 400ms ease-in-out;
-  transition: opacity 400ms;
+  transition: opacity .7s ease-in-out;
+  transition: opacity .7s;
   visibility: hidden;
-  z-index: 10;
+  z-index: 1;
+}
+
+
+.searchDrawer {
+  background: rgba(0, 0, 0, 0.2);
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: opacity .7s ease-in-out;
+  transition: opacity .7s;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.searchDrawer .close-outside {
+  background: transparent;
+  border: none;
+  color: transparent;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
 }
 
 .overlay .close-outside {
@@ -144,7 +173,14 @@ aside li {
   position: sticky;
   top: 0;
   z-index: 1;
+}
 
+.srchToggle {
+  display: none;
+}
+
+.closeSrch {
+  display: none;
 }
 
 .header-menu-mobile-toggle {
@@ -285,7 +321,7 @@ aside li {
 
 .predictive-search {
   height: 100vh;
-  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .predictive-search-form {
@@ -294,8 +330,15 @@ aside li {
   top: 0;
 }
 
+.predictive-search-results {
+  display: flex;
+}
+
+
 .predictive-search-result {
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
+  overflow-x: scroll;
+  display: flex;
 }
 
 .predictive-search-result h5 {
@@ -304,25 +347,47 @@ aside li {
 
 .predictive-search-result-item {
   margin-bottom: 0.5rem;
+  /* display: block; */
 }
 
-.predictive-search-result-item a {
+
+
+/*.predictive-search-result-item a {
   align-items: center;
   display: flex;
-}
+} */
 
 .predictive-search-result-item a img {
-  margin-right: 0.75rem;
-  height: 100%;
+  /* margin-right: 0.75rem; */
+  height: 150px;
+  width: 150px;
+  margin-bottom: .75rem;
 }
 
 .search-result {
   margin-bottom: 1.5rem;
+  display: flex;
 }
 
 .search-results-item {
   margin-bottom: 0.5rem;
+  
 }
+
+.searchRes {
+  /* display: flex; */
+}
+
+.okay {
+  display: flex;
+  align-items: center;
+  font-size: .7rem;
+  word-wrap: break-word;
+}
+
+/* #search-aside {
+  display: flex;
+} */
 
 /*
 * --------------------------------------------------
@@ -497,4 +562,38 @@ aside li {
 
 .account-logout {
   display: inline-block;
+}
+
+
+/* some mobile styling. */
+@media screen and (min-width:250px) and (max-width: 1024px) {
+  nav .searchContainer {
+    display: none;
+  }
+
+  .srchToggle {
+    display: flex;
+  }
+
+  .closeSrch {
+    display: flex;
+  }
+
+  .predictive-search-results {
+    display: block;
+    overflow-x: hidden;
+    max-width: var(--aside-width);
+    min-width: var(--aside-width);
+  }
+
+  .searchRes {
+    overflow-x: hidden;
+  }
+
+  ul {
+    display: flex;
+    max-width: var(--aside-width);
+    min-width: var(--aside-width);
+    overflow: hidden;
+  }
 }

@@ -1,5 +1,9 @@
 import {Await, NavLink, useMatches, Form} from '@remix-run/react';
 import {Suspense} from 'react';
+import {
+  PredictiveSearchForm, PredictiveSearchResults,
+} from '~/components/Search';
+import '../styles/reset.css';
 
 
 
@@ -38,7 +42,7 @@ export function HeaderMenu({menu, viewport}) {
           style={activeLinkStyle}
           to="/"
         >
-          <p className='font-sans text-transform: uppercase font-semibold text-sm'>Home</p>
+          <p className='text-transform: uppercase font-bold text-sm'>Home</p>
         </NavLink>
       )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
@@ -52,7 +56,7 @@ export function HeaderMenu({menu, viewport}) {
             : item.url;
         return (
           <NavLink
-            className="header-menu-item font-sans text-transform: uppercase font-semibold text-sm"
+            className="header-menu-item text-transform: uppercase font-bold text-sm"
             end
             key={item.id}
             onClick={closeAside}
@@ -68,10 +72,30 @@ export function HeaderMenu({menu, viewport}) {
   );
 }
 
+
+
 function HeaderCtas({isLoggedIn, cart}) {
   return (
-    <nav className="header-ctas font-sans text-transform: uppercase font-semibold text-sm" role="navigation">
+    <nav className="header-ctas text-transform: uppercase font-bold text-sm" role="navigation">
+      <div className='searchContainer'>
+        <PredictiveSearchForm>
+          {({fetchResults, inputRef}) => (
+            <div className='srchStuff'>
+              <input
+                name="q"
+                onChange={fetchResults}
+                onFocus={fetchResults}
+                placeholder="SEARCH"
+                ref={inputRef}
+              />
+              &nbsp;
+              <button type="submit"><img src="/search.svg" alt="" /></button>
+            </div>
+          )}
+        </PredictiveSearchForm>
+        </div>
       <SearchToggle/>
+      <CloseSearchToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
       </NavLink>
@@ -90,7 +114,11 @@ function HeaderMenuMobileToggle() {
 }
 
 function SearchToggle() {
-  return <a href="#search-aside"><img src="/search.svg" alt="" /></a>;
+  return <a href="#search-aside" className='srchToggle'><img src="/search.svg" alt="" /></a>;
+}
+
+function CloseSearchToggle() {
+  return <a href="#" className='closeSrch'><img src='/x.svg'/></a>
 }
 
 function CartBadge({count}) {

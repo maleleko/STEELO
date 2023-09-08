@@ -8,6 +8,7 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search';
+import '../styles/app.css';
 
 export function Layout({cart, children = null, footer, header, isLoggedIn}) {
   return (
@@ -16,6 +17,7 @@ export function Layout({cart, children = null, footer, header, isLoggedIn}) {
       <SearchAside />
       <MobileMenuAside menu={header.menu} />
       <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      <PredictiveSearchResults />
       <main>{children}</main>
       <Suspense>
         <Await resolve={footer}>
@@ -43,32 +45,26 @@ function CartAside({cart}) {
 function SearchAside() {
   return (
     <Aside id="search-aside" heading="SEARCH">
-      <div className='searchBarDiv'>
-        <div>
-          <img src="/search.svg" alt="" />
-        </div>
-
-        <div className="predictive-search">
-          <br />
-          <PredictiveSearchForm>
-            {({fetchResults, inputRef}) => (
-              <div>
-                <input className='searchBarThings font-sans text-sm text-black font-semibold text-transform: uppercase; w-full'
-                  name="q"
-                  onChange={fetchResults}
-                  onFocus={fetchResults}
-                  placeholder="search"
-                  ref={inputRef}
-                  type="search"
-                />
-                &nbsp;
-                {/* <button type="submit">Search</button> */}
-              </div>
-            )}
-          </PredictiveSearchForm>
+      <div className="predictive-search">
+        {/* <br /> */}
+        <PredictiveSearchForm>
+          {({fetchResults, inputRef}) => (
+            <div>
+              <input
+                name="q"
+                onChange={fetchResults}
+                onFocus={fetchResults}
+                placeholder="blah"
+                ref={inputRef}
+                type="search"
+              />
+              &nbsp;
+              <button type="submit"><img src="/search.svg" alt="" /></button>
             </div>
-          </div>
-          <PredictiveSearchResults />
+          )}
+        </PredictiveSearchForm>
+        <PredictiveSearchResults />
+      </div>
     </Aside>
   );
 }

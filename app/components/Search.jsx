@@ -237,7 +237,7 @@ export function PredictiveSearchResults() {
   }
   return (
     <div className="predictive-search-results">
-      <div>
+      <div className='searchRes'>
         {results.map(({type, items}) => (
           <PredictiveSearchResult
             goToSearchResult={goToSearchResult}
@@ -251,8 +251,8 @@ export function PredictiveSearchResults() {
       {/* view all results /search?q=term */}
       {searchTerm.current && (
         <Link onClick={goToSearchResult} to={`/search?q=${searchTerm.current}`}>
-          <p>
-            View all results for <q>{searchTerm.current}</q>
+          <p className='text-xs font-bold'>
+            View all <q>{searchTerm.current}</q>
             &nbsp; →
           </p>
         </Link>
@@ -273,16 +273,17 @@ function NoPredictiveSearchResults({searchTerm}) {
 }
 
 function PredictiveSearchResult({goToSearchResult, items, searchTerm, type}) {
-  const isSuggestions = type === 'queries';
+  // const isSuggestions = type === 'queries';
   const categoryUrl = `/search?q=${
     searchTerm.current
   }&type=${pluralToSingularSearchType(type)}`;
 
   return (
-    <div className="predictive-search-result" key={type}>
-      <Link prefetch="intent" to={categoryUrl} onClick={goToSearchResult}>
+    <div className="predictive-search-result" key="products">
+      {/* <Link prefetch="intent" to={categoryUrl} onClick={goToSearchResult}>
         <h5>{isSuggestions ? 'Suggestions' : type}</h5>
-      </Link>
+      </Link> */}
+      <div className='okay'>
       <ul>
         {items.map((item) => (
           <SearchResultItem
@@ -292,6 +293,7 @@ function PredictiveSearchResult({goToSearchResult, items, searchTerm, type}) {
           />
         ))}
       </ul>
+      </div>
     </div>
   );
 }
@@ -311,15 +313,16 @@ function SearchResultItem({goToSearchResult, item}) {
         <div>
           {item.styledTitle ? (
             <div
+              className='HIDETHIS'
               dangerouslySetInnerHTML={{
                 __html: item.styledTitle,
               }}
             />
           ) : (
-            <span>{item.title}</span>
+            <p className='text-xs'>{item.title}</p>
           )}
           {item?.price && (
-            <small>
+            <small className='text-xs'>
               <Money data={item.price} />
             </small>
           )}
