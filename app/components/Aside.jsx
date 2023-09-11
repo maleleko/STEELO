@@ -22,9 +22,9 @@ export function Aside({children, heading, id = 'aside'}) {
       <aside>
         {/* <header> */}
           {/* <h3>{heading}</h3> */}
-          <CloseAside />
+          {/* <CloseAside /> */}
         {/* </header> */}
-        <main className='pl-4 w-full'>{children}</main>
+        <main className='w-full'>{children}</main>
       </aside>
     </div>
   );

@@ -1,6 +1,6 @@
 import {Link, Form, useParams, useFetcher, useFetchers} from '@remix-run/react';
 import {Image, Money, Pagination} from '@shopify/hydrogen';
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 
 export const NO_PREDICTIVE_SEARCH_RESULTS = [
   {type: 'queries', items: []},
@@ -41,6 +41,7 @@ export function SearchForm({searchTerm}) {
         placeholder="Search…"
         ref={inputRef}
         type="search"
+        value={inputValue}
       />
       &nbsp;
       <button type="submit">Search</button>
@@ -52,6 +53,7 @@ export function SearchResults({results}) {
   if (!results) {
     return null;
   }
+
   const keys = Object.keys(results);
   return (
     <div>
@@ -202,6 +204,21 @@ export function PredictiveSearchForm({
     inputRef?.current?.setAttribute('type', 'search');
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1080) {
+        fetchResults({target: {value: ''}})
+        console.log('#####clearing')
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      inputRef?.current?.setAttribute('type', 'search')
+    }
+  }, []);
+
   return (
     <fetcher.Form
       {...props}
@@ -211,16 +228,17 @@ export function PredictiveSearchForm({
         event.stopPropagation();
         if (!inputRef?.current || inputRef.current.value === '') {
           return;
+          // this code might be why i cant clear input/results on resize
         }
         inputRef.current.blur();
       }}
     >
       {children({fetchResults, inputRef, fetcher})}
     </fetcher.Form>
-  );
+  );  
 }
 
-export function PredictiveSearchResults() {
+export function PredictiveSearchResults({ className }) {
   const {results, totalResults, searchInputRef, searchTerm} =
     usePredictiveSearch();
 
@@ -235,8 +253,20 @@ export function PredictiveSearchResults() {
   if (!totalResults) {
     return <NoPredictiveSearchResults searchTerm={searchTerm} />;
   }
+  
   return (
-    <div className="predictive-search-results">
+    <div className={`predictive-search-results ${className}`}>
+      <div className='searchTerms'>
+            {/* view all results /search?q=term */}
+      {searchTerm.current && (
+        <Link onClick={goToSearchResult} to={`/search?q=${searchTerm.current}`}>
+          <p className='text-xs font-bold text-transform: capitalize'>
+            View all
+            &nbsp; →
+          </p>
+        </Link>
+      )}
+      </div>
       <div className='searchRes'>
         {results.map(({type, items}) => (
           <PredictiveSearchResult
@@ -248,15 +278,6 @@ export function PredictiveSearchResults() {
           />
         ))}
       </div>
-      {/* view all results /search?q=term */}
-      {searchTerm.current && (
-        <Link onClick={goToSearchResult} to={`/search?q=${searchTerm.current}`}>
-          <p className='text-xs font-bold'>
-            View all <q>{searchTerm.current}</q>
-            &nbsp; →
-          </p>
-        </Link>
-      )}
     </div>
   );
 }
@@ -319,7 +340,7 @@ function SearchResultItem({goToSearchResult, item}) {
               }}
             />
           ) : (
-            <p className='text-xs'>{item.title}</p>
+            <p className='text-xs capitalize'>{item.title}</p>
           )}
           {item?.price && (
             <small className='text-xs'>

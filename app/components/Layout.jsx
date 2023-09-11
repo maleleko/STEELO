@@ -1,5 +1,5 @@
-import {Await} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Await, useHref} from '@remix-run/react';
+import React, {Suspense, useEffect} from 'react';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
@@ -17,7 +17,7 @@ export function Layout({cart, children = null, footer, header, isLoggedIn}) {
       <SearchAside />
       <MobileMenuAside menu={header.menu} />
       <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
-      <PredictiveSearchResults />
+      <PredictiveSearchResults className='hideForMobile'/>
       <main>{children}</main>
       <Suspense>
         <Await resolve={footer}>
@@ -54,12 +54,13 @@ function SearchAside() {
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="blah"
+                placeholder="SEARCH"
                 ref={inputRef}
                 type="search"
+                className='focus:border-black'
               />
               &nbsp;
-              <button type="submit"><img src="/search.svg" alt="" /></button>
+              {/* <button type="submit"><img src="/search.svg" alt="" /></button> */}
             </div>
           )}
         </PredictiveSearchForm>
@@ -72,7 +73,7 @@ function SearchAside() {
 function MobileMenuAside({menu}) {
   return (
     <Aside id="mobile-menu-aside" heading="MENU">
-      <HeaderMenu menu={menu} viewport="mobile" />
+      <HeaderMenu menu={menu} viewport="mobile"/>
     </Aside>
   );
 }

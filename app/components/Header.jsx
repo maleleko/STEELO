@@ -1,8 +1,9 @@
 import {Await, NavLink, useMatches, Form} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import {
   PredictiveSearchForm, PredictiveSearchResults,
 } from '~/components/Search';
+import {SearchToggle} from '~/components/SearchToggle';
 import '../styles/reset.css';
 
 
@@ -87,15 +88,15 @@ function HeaderCtas({isLoggedIn, cart}) {
                 onFocus={fetchResults}
                 placeholder="SEARCH"
                 ref={inputRef}
+                className='focus:border-black'
               />
               &nbsp;
-              <button type="submit"><img src="/search.svg" alt="" /></button>
+              {/* <button type="submit"><img src="/search.svg" alt="" /></button> */}
             </div>
           )}
         </PredictiveSearchForm>
         </div>
-      <SearchToggle/>
-      <CloseSearchToggle />
+        <SearchToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
       </NavLink>
@@ -106,19 +107,25 @@ function HeaderCtas({isLoggedIn, cart}) {
 }
 
 function HeaderMenuMobileToggle() {
+  const [href, setHref] = useState('/')
+
+  const toggleHref = (event) => {
+    if (href === '/' && '#') {
+      setHref('#mobile-menu-aside')
+    } else if (href === '#mobile-menu-aside') {
+      setHref('#')
+    }
+    else {
+      setHref('#mobile-menu-aside')
+    }
+
+  }
+
   return (
-    <a className="header-menu-mobile-toggle text-transform: upperrcase text-2xl" href="#mobile-menu-aside">
+    <a className="header-menu-mobile-toggle text-transform: upperrcase text-2xl" href={href} onClick={toggleHref}>
       <h3 className='mobileBtn'>☰</h3>
     </a>
   );
-}
-
-function SearchToggle() {
-  return <a href="#search-aside" className='srchToggle'><img src="/search.svg" alt="" /></a>;
-}
-
-function CloseSearchToggle() {
-  return <a href="#" className='closeSrch'><img src='/x.svg'/></a>
 }
 
 function CartBadge({count}) {
