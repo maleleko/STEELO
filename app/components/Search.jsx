@@ -41,7 +41,7 @@ export function SearchForm({searchTerm}) {
         placeholder="Search…"
         ref={inputRef}
         type="search"
-        value={inputValue}
+        autoComplete='off'
       />
       &nbsp;
       <button type="submit">Search</button>
@@ -178,7 +178,7 @@ export function NoSearchResults() {
 export function PredictiveSearchForm({
   action,
   children,
-  className = 'predictive-search-form',
+  className = 'predictive-search-form px-4',
   method = 'POST',
   ...props
 }) {
@@ -222,6 +222,7 @@ export function PredictiveSearchForm({
   return (
     <fetcher.Form
       {...props}
+      autoComplete='off'
       className={className}
       onSubmit={(event) => {
         event.preventDefault();

@@ -109,7 +109,7 @@ function HeaderCtas({isLoggedIn, cart}) {
 function HeaderMenuMobileToggle() {
   const [href, setHref] = useState('/')
 
-  const toggleHref = (event) => {
+  const toggleHref = () => {
     if (href === '/' && '#') {
       setHref('#mobile-menu-aside')
     } else if (href === '#mobile-menu-aside') {

@@ -24,7 +24,7 @@ export function Aside({children, heading, id = 'aside'}) {
           {/* <h3>{heading}</h3> */}
           {/* <CloseAside /> */}
         {/* </header> */}
-        <main className='w-full'>{children}</main>
+        <main className=''>{children}</main>
       </aside>
     </div>
   );
