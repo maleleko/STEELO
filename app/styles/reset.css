@@ -144,14 +144,15 @@ ul {
   text-align: center;
 }
 
-li {
+/* li {
   margin-right: 0.5rem;
   align-items: center;
   display: block;
   padding: 0 2rem;
   text-align: center;
   width: 200px;
-}
+  height: 200px;
+} */
 
 dl {
   margin: 0.5rem 0;

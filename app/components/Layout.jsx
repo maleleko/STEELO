@@ -9,6 +9,7 @@ import {
   PredictiveSearchResults,
 } from '~/components/Search';
 import '../styles/app.css';
+import { CartDrawer } from './CartDrawer';
 
 export function Layout({cart, children = null, footer, header, isLoggedIn}) {
   return (
@@ -30,15 +31,15 @@ export function Layout({cart, children = null, footer, header, isLoggedIn}) {
 
 function CartAside({cart}) {
   return (
-    <Aside id="cart-aside" heading="CART">
+    <CartDrawer id="cart-drawer" heading="CART">
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
+            return <CartMain cart={cart} />;
           }}
         </Await>
       </Suspense>
-    </Aside>
+    </CartDrawer>
   );
 }
 

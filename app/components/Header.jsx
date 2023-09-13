@@ -129,9 +129,27 @@ function HeaderMenuMobileToggle() {
 }
 
 function CartBadge({count}) {
+  const [cartHref, setCartHref] = useState('/')
+
+  const toggleCartDrawer = () => {
+    // function goToSearchResult(event) {
+    //   window.location.href = event.target.href
+    // }
+
+    if (cartHref === '#') {
+      setCartHref('#cart-drawer')
+      console.log('refreshed')
+    } else if (cartHref === '#cart-drawer') {
+      setCartHref('#')
+    }
+    else {
+      setCartHref('#cart-drawer')
+    }
+  }
+
   return <div className='cartTesting'>
-      <a href='#cart-aside'><img src="/shopping-cart.svg" alt="" /></a>
-      <a href='#cart-aside'><p className='text-xs'>{count}</p></a>
+      <a href={cartHref} onClick={toggleCartDrawer}><img src="/shopping-cart.svg" alt="" /></a>
+      <a href={cartHref} onClick={toggleCartDrawer}><p className='text-xs'>{count}</p></a>
     </div>
 }
 

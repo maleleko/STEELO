@@ -25,7 +25,7 @@ function CartDetails({layout, cart}) {
       <CartLines lines={cart?.lines} layout={layout} />
       {cartHasItems && (
         <CartSummary cost={cart.cost} layout={layout}>
-          <CartDiscounts discountCodes={cart.discountCodes} />
+          {/* <CartDiscounts discountCodes={cart.discountCodes} /> */}
           <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
         </CartSummary>
       )}
@@ -37,8 +37,8 @@ function CartLines({lines, layout}) {
   if (!lines) return null;
 
   return (
-    <div aria-labelledby="cart-lines">
-      <ul>
+    <div aria-labelledby="cart-lines" className='ayo'>
+      <ul className='yo'>
         {lines.nodes.map((line) => (
           <CartLineItem key={line.id} line={line} layout={layout} />
         ))}
@@ -65,7 +65,7 @@ function CartLineItem({layout, line}) {
         />
       )}
 
-      <div>
+      <div className='cartItemDetails'>
         <Link
           prefetch="intent"
           to={lineItemUrl}
@@ -77,19 +77,19 @@ function CartLineItem({layout, line}) {
           }}
         >
           <p>
-            <strong>{product.title}</strong>
+            <strong className='text-xs'>{product.title}</strong>
           </p>
         </Link>
-        <CartLinePrice line={line} as="span" />
-        <ul>
+        <ul className='cartOptions'>
           {selectedOptions.map((option) => (
             <li key={option.name}>
-              <small>
+              <small className='capitalize'>
                 {option.name}: {option.value}
               </small>
             </li>
           ))}
         </ul>
+          <CartLinePrice line={line} as="span" />
         <CartLineQuantity line={line} />
       </div>
     </li>
@@ -100,11 +100,15 @@ function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
+    <div className='p-6'>
       <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+        <p className='checkoutBtn uppercase'>Checkout  &rarr;</p>
       </a>
       <br />
+
+      <a href="cart">
+        <p className='viewCart'>VIEW CART</p>
+      </a>
     </div>
   );
 }
@@ -115,10 +119,9 @@ export function CartSummary({cost, layout, children = null}) {
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
       <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+        <dt className='text-sm'>Subtotal:</dt>
+        <dd className='text-sm'>
           {cost?.subtotalAmount?.amount ? (
             <Money data={cost?.subtotalAmount} />
           ) : (
@@ -138,7 +141,8 @@ function CartLineRemoveButton({lineIds}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button type="submit">Remove</button>
+      <button type="submit">&#128465;</button>
+      {/* <button type="submit" className='removeBtn'><img src='/trash-2.svg' /></button> */}
     </CartForm>
   );
 }
@@ -151,20 +155,23 @@ function CartLineQuantity({line}) {
 
   return (
     <div className="cart-line-quantiy">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+      {/* <small>{quantity} &nbsp;&nbsp;</small> */}
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
+          className='qtyBtn'
           aria-label="Decrease quantity"
           disabled={quantity <= 1}
           name="decrease-quantity"
           value={prevQuantity}
         >
-          <span>&#8722; </span>
+          <span className='text-base'>&#8722;</span>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
+
+      <small className='qtyBtn'>{quantity}</small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
+          className='qtyBtn'
           aria-label="Increase quantity"
           name="increase-quantity"
           value={nextQuantity}
@@ -191,7 +198,7 @@ function CartLinePrice({line, priceType = 'regular', ...passthroughProps}) {
   }
 
   return (
-    <div>
+    <div className='itemPrice'>
       <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />
     </div>
   );
@@ -219,39 +226,39 @@ export function CartEmpty({hidden = false, layout = 'aside'}) {
   );
 }
 
-function CartDiscounts({discountCodes}) {
-  const codes =
-    discountCodes
-      ?.filter((discount) => discount.applicable)
-      ?.map(({code}) => code) || [];
+// function CartDiscounts({discountCodes}) {
+//   const codes =
+//     discountCodes
+//       ?.filter((discount) => discount.applicable)
+//       ?.map(({code}) => code) || [];
 
-  return (
-    <div>
-      {/* Have existing discount, display it with a remove option */}
-      <dl hidden={!codes.length}>
-        <div>
-          <dt>Discount(s)</dt>
-          <UpdateDiscountForm>
-            <div className="cart-discount">
-              <code>{codes?.join(', ')}</code>
-              &nbsp;
-              <button>Remove</button>
-            </div>
-          </UpdateDiscountForm>
-        </div>
-      </dl>
+//   return (
+//     <div>
+//       {/* Have existing discount, display it with a remove option */}
+//       <dl hidden={!codes.length}>
+//         <div>
+//           <dt>Discount(s)</dt>
+//           <UpdateDiscountForm>
+//             <div className="cart-discount">
+//               <code>{codes?.join(', ')}</code>
+//               &nbsp;
+//               <button>Remove</button>
+//             </div>
+//           </UpdateDiscountForm>
+//         </div>
+//       </dl>
 
-      {/* Show an input to apply a discount */}
-      <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
-          &nbsp;
-          <button type="submit">Apply</button>
-        </div>
-      </UpdateDiscountForm>
-    </div>
-  );
-}
+//       {/* Show an input to apply a discount */}
+//       <UpdateDiscountForm discountCodes={codes}>
+//         <div>
+//           <input type="text" name="discountCode" placeholder="Discount code" />
+//           &nbsp;
+//           <button type="submit">Apply</button>
+//         </div>
+//       </UpdateDiscountForm>
+//     </div>
+//   );
+// }
 
 function UpdateDiscountForm({discountCodes, children}) {
   return (

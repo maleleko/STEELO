@@ -268,7 +268,7 @@ export function PredictiveSearchResults({ className }) {
         </Link>
       )}
       </div>
-      <div className='searchRes'>
+      {/* <div className='searchRes'> */}
         {results.map(({type, items}) => (
           <PredictiveSearchResult
             goToSearchResult={goToSearchResult}
@@ -278,7 +278,7 @@ export function PredictiveSearchResults({ className }) {
             type={type}
           />
         ))}
-      </div>
+      {/* </div> */}
     </div>
   );
 }
