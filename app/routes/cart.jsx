@@ -86,7 +86,13 @@ export default function Cart() {
 
   return (
     <div className="cart">
-      <h1>Cart</h1>
+      <h1 className='uppercase font-bold text-center'>Your Shopping Cart</h1>
+      <div className='cartHeader'>
+        <p className='text-sm font-bold w-2/5'>PRODUCT</p>
+        <p className='text-sm font-bold'>QTY</p>
+        <p className='text-sm font-bold'>PRICE</p>
+      </div>
+      <div className='cartContainer'>
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await errorElement={<div>An error occurred</div>} resolve={cart}>
           {(cart) => {
@@ -94,6 +100,7 @@ export default function Cart() {
           }}
         </Await>
       </Suspense>
+      </div>
     </div>
   );
 }

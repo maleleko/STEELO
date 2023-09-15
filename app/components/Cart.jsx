@@ -53,46 +53,55 @@ function CartLineItem({layout, line}) {
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <li key={id} className="cart-line">
-      {image && (
-        <Image
+    <div>
+
+      <li key={id} className="cart-line">
+        {image && (
+          <Image
           alt={title}
           aspectRatio="1/1"
           data={image}
           height={100}
           loading="lazy"
           width={100}
-        />
-      )}
+          />
+          )}
 
-      <div className='cartItemDetails'>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => {
-            if (layout === 'aside') {
-              // close the drawer
-              window.location.href = lineItemUrl;
-            }
-          }}
-        >
-          <p>
-            <strong className='text-xs'>{product.title}</strong>
-          </p>
-        </Link>
-        <ul className='cartOptions'>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small className='capitalize'>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
-        </ul>
-          <CartLinePrice line={line} as="span" />
-        <CartLineQuantity line={line} />
-      </div>
-    </li>
+        <div className='cartItemDetails'>
+          <Link
+            prefetch="intent"
+            to={lineItemUrl}
+            onClick={() => {
+              if (layout === 'aside') {
+                // close the drawer
+                window.location.href = lineItemUrl;
+              }
+            }}
+            >
+            <p>
+              <strong className='text-xs'>{product.title}</strong>
+            </p>
+          </Link>
+          <ul className='cartOptions'>
+            {selectedOptions.map((option) => (
+              <li key={option.name}>
+                <small className='capitalize'>
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            ))}
+          </ul>
+
+            <div>
+              <CartLinePrice line={line} as="span" />
+            </div>
+
+            <div>
+              <CartLineQuantity line={line} />
+            </div>
+        </div>
+      </li>
+    </div>
   );
 }
 
@@ -164,7 +173,7 @@ function CartLineQuantity({line}) {
           name="decrease-quantity"
           value={prevQuantity}
         >
-          <span className='text-base'>&#8722;</span>
+          <span className='text-base font-extrabold'>&#8722;</span>
         </button>
       </CartLineUpdateButton>
 
@@ -176,7 +185,7 @@ function CartLineQuantity({line}) {
           name="increase-quantity"
           value={nextQuantity}
         >
-          <span>&#43;</span>
+          <span className='font-extrabold'>&#43;</span>
         </button>
       </CartLineUpdateButton>
       &nbsp;

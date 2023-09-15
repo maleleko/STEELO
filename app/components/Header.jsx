@@ -5,6 +5,7 @@ import {
 } from '~/components/Search';
 import {SearchToggle} from '~/components/SearchToggle';
 import '../styles/reset.css';
+// import { CartDrawer } from './CartDrawer';
 
 
 
@@ -129,12 +130,20 @@ function HeaderMenuMobileToggle() {
 }
 
 function CartBadge({count}) {
+
+    // implement actual state manipulation for cartDrawer.jsx
+    // cause this href method, stinks.
+  // const [showCartDrawer, setShowCartDrawer] = useState(false);
+
+  // const toggleDrawer = () => {
+  //   setShowCartDrawer(!showCartDrawer);
+  //   console.log('toggling', showCartDrawer)
+  // }
+
+
   const [cartHref, setCartHref] = useState('/')
 
   const toggleCartDrawer = () => {
-    // function goToSearchResult(event) {
-    //   window.location.href = event.target.href
-    // }
 
     if (cartHref === '#') {
       setCartHref('#cart-drawer')
@@ -146,6 +155,12 @@ function CartBadge({count}) {
       setCartHref('#cart-drawer')
     }
   }
+
+  // return <div className='cartTesting' onClick={toggleDrawer} >
+  //   <button><img src='/shopping-cart.svg' alt='Cart Icon'/></button>
+  //   <p>{count}</p>
+  //   {showCartDrawer && <CartDrawer />}
+  // </div>
 
   return <div className='cartTesting'>
       <a href={cartHref} onClick={toggleCartDrawer}><img src="/shopping-cart.svg" alt="" /></a>

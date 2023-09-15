@@ -15,6 +15,8 @@ img {
   border-radius: 4px;
 }
 
+/* main layout */
+
 
 /*
 * --------------------------------------------------
@@ -174,7 +176,7 @@ aside li {
   background: #ffffff;
   display: flex;
   height: var(--header-height);
-  padding: 0 2rem;
+  padding: 0 4rem;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -263,7 +265,14 @@ aside li {
   width: 50px;
   display: flex;
   justify-content: space-around;
+  text-align: center;
   align-items: center;
+  /* line-height: 0; */
+  /* align-items: center; */
+}
+
+.cartTesting p {
+  line-height: 0;
 }
 
 .cartDrawer {
@@ -316,7 +325,6 @@ aside li {
 }
 
 .cart-main {
-
 }
 
 .cart-details {
@@ -443,6 +451,50 @@ aside li {
   border: solid 2px black;
   padding: 1rem;
   text-align: center;
+}
+
+
+
+
+/* /cart url */
+.mainContent .cart {
+  width: 80vw;
+  margin: 0 auto;
+}
+
+.cartHeader {
+  border-bottom: solid 1px #bdbdbd;
+  width: 55vw;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: .75rem;
+}
+
+
+.cartContainer .cart-main {
+  width: 55vw;
+}
+
+.mainContent .cart-line-quantiy {
+  position: relative;
+  /* left: 32rem; */
+}
+
+.cartContainer .cart-line {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+/* .mainContent .cart-summary-page {
+  position: fixed;
+  top: 10rem;
+  right: 10rem;
+  width: 25vw;
+  background-color: #f1f1f1;
+} */
+
+.mainContent .viewCart {
+  display: none;
 }
 
 /*
@@ -732,6 +784,10 @@ aside li {
 
 /* some mobile styling. */
 @media screen and (min-width:250px) and (max-width: 1024px) {
+  .header {
+    padding: 0 2rem;
+  }
+
   nav .searchContainer {
     display: none;
   }
