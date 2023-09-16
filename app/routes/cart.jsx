@@ -88,9 +88,15 @@ export default function Cart() {
     <div className="cart">
       <h1 className='uppercase font-bold text-center'>Your Shopping Cart</h1>
       <div className='cartHeader'>
-        <p className='text-sm font-bold w-2/5'>PRODUCT</p>
+        <div className='cart-header-label-product'>
+        <p className='text-sm font-bold'>PRODUCT</p>
+        </div>
+        <div className='cart-header-label-qty'>
         <p className='text-sm font-bold'>QTY</p>
+        </div>
+        <div className='cart-header-label-price'>
         <p className='text-sm font-bold'>PRICE</p>
+        </div>
       </div>
       <div className='cartContainer'>
       <Suspense fallback={<p>Loading cart ...</p>}>

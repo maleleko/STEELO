@@ -37,12 +37,18 @@ function CartLines({lines, layout}) {
   if (!lines) return null;
 
   return (
-    <div aria-labelledby="cart-lines" className='ayo'>
-      <ul className='yo'>
+    <div aria-labelledby="cart-lines" className='cart-list-container'>
+      <ul className='cart-list'>
         {lines.nodes.map((line) => (
           <CartLineItem key={line.id} line={line} layout={layout} />
         ))}
       </ul>
+{/* 
+      <ul className='hideincartdrawer'>
+          {lines.nodes.map((line) => (
+            <CartPageLayout key={line.id} line={line} layout={layout} />
+          ))}
+      </ul> */}
     </div>
   );
 }
@@ -53,7 +59,8 @@ function CartLineItem({layout, line}) {
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <div>
+    // <div className='somehowhideincartpage'>
+    <div className='cart-line-things'>
 
       <li key={id} className="cart-line">
         {image && (
@@ -92,18 +99,79 @@ function CartLineItem({layout, line}) {
             ))}
           </ul>
 
-            <div>
-              <CartLinePrice line={line} as="span" />
-            </div>
-
-            <div>
-              <CartLineQuantity line={line} />
-            </div>
         </div>
       </li>
+
+            <div className='cart-line-qty'>
+              <CartLineQuantity line={line} />
+            </div>
+
+            <div className='cart-line-price'>
+              <CartLinePrice line={line} as="span" />
+            </div>
     </div>
+    // </div>
   );
 }
+
+// function CartPageLayout({layout, line}) {
+//   const {id, merchandise} = line;
+//   const {product, title, image, selectedOptions} = merchandise;
+//   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
+
+//   return (
+//     <div className='cart-line-things'>
+
+//     <li key={id} className="cart-line">
+//       {image && (
+//         <Image
+//         alt={title}
+//         aspectRatio="1/1"
+//         data={image}
+//         height={100}
+//         loading="lazy"
+//         width={100}
+//         />
+//         )}
+
+//       <div className='cartItemDetails'>
+//         <Link
+//           prefetch="intent"
+//           to={lineItemUrl}
+//           onClick={() => {
+//             if (layout === 'aside') {
+//               // close the drawer
+//               window.location.href = lineItemUrl;
+//             }
+//           }}
+//           >
+//           <p>
+//             <strong className='text-xs'>{product.title}</strong>
+//           </p>
+//         </Link>
+//         <ul className='cartOptions'>
+//           {selectedOptions.map((option) => (
+//             <li key={option.name}>
+//               <small className='capitalize'>
+//                 {option.name}: {option.value}
+//               </small>
+//             </li>
+//           ))}
+//         </ul>
+
+//       </div>
+//     </li>
+
+//           <div className='cart-line-qty'>
+//             <CartLineQuantity line={line} />
+//           </div>
+
+//           <div className='cart-line-price'>
+//             <CartLinePrice line={line} as="span" />
+//           </div>
+//   </div>
+// );
+// }
 
 function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
@@ -115,7 +183,7 @@ function CartCheckoutActions({checkoutUrl}) {
       </a>
       <br />
 
-      <a href="cart">
+      <a href="/cart">
         <p className='viewCart'>VIEW CART</p>
       </a>
     </div>
@@ -229,7 +297,10 @@ export function CartEmpty({hidden = false, layout = 'aside'}) {
           }
         }}
       >
-        Continue shopping →
+        <div>
+          Looks like your Cart is empty.
+          Search Our Collections →
+        </div>
       </Link>
     </div>
   );
