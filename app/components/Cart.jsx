@@ -43,12 +43,6 @@ function CartLines({lines, layout}) {
           <CartLineItem key={line.id} line={line} layout={layout} />
         ))}
       </ul>
-{/* 
-      <ul className='hideincartdrawer'>
-          {lines.nodes.map((line) => (
-            <CartPageLayout key={line.id} line={line} layout={layout} />
-          ))}
-      </ul> */}
     </div>
   );
 }
@@ -59,10 +53,9 @@ function CartLineItem({layout, line}) {
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    // <div className='somehowhideincartpage'>
-    <div className='cart-line-things'>
+    <div className='cart-line-info'>
 
-      <li key={id} className="cart-line">
+      <li key={id} className="cart-line" >
         {image && (
           <Image
           alt={title}
@@ -98,86 +91,19 @@ function CartLineItem({layout, line}) {
               </li>
             ))}
           </ul>
-
+          <CartLinePrice line={line} as="span" />
+          <CartLineQuantity line={line} />
         </div>
       </li>
-
-            <div className='cart-line-qty'>
-              <CartLineQuantity line={line} />
-            </div>
-
-            <div className='cart-line-price'>
-              <CartLinePrice line={line} as="span" />
-            </div>
     </div>
-    // </div>
   );
 }
-
-// function CartPageLayout({layout, line}) {
-//   const {id, merchandise} = line;
-//   const {product, title, image, selectedOptions} = merchandise;
-//   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
-
-//   return (
-//     <div className='cart-line-things'>
-
-//     <li key={id} className="cart-line">
-//       {image && (
-//         <Image
-//         alt={title}
-//         aspectRatio="1/1"
-//         data={image}
-//         height={100}
-//         loading="lazy"
-//         width={100}
-//         />
-//         )}
-
-//       <div className='cartItemDetails'>
-//         <Link
-//           prefetch="intent"
-//           to={lineItemUrl}
-//           onClick={() => {
-//             if (layout === 'aside') {
-//               // close the drawer
-//               window.location.href = lineItemUrl;
-//             }
-//           }}
-//           >
-//           <p>
-//             <strong className='text-xs'>{product.title}</strong>
-//           </p>
-//         </Link>
-//         <ul className='cartOptions'>
-//           {selectedOptions.map((option) => (
-//             <li key={option.name}>
-//               <small className='capitalize'>
-//                 {option.name}: {option.value}
-//               </small>
-//             </li>
-//           ))}
-//         </ul>
-
-//       </div>
-//     </li>
-
-//           <div className='cart-line-qty'>
-//             <CartLineQuantity line={line} />
-//           </div>
-
-//           <div className='cart-line-price'>
-//             <CartLinePrice line={line} as="span" />
-//           </div>
-//   </div>
-// );
-// }
 
 function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div className='p-6'>
+    <div className='mt-6'>
       <a href={checkoutUrl} target="_self">
         <p className='checkoutBtn uppercase'>Checkout  &rarr;</p>
       </a>
@@ -195,6 +121,7 @@ export function CartSummary({cost, layout, children = null}) {
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
+    <div className='cart-summary-cont'>
     <div aria-labelledby="cart-summary" className={className}>
       <dl className="cart-subtotal">
         <dt className='text-sm'>Subtotal:</dt>
@@ -206,21 +133,26 @@ export function CartSummary({cost, layout, children = null}) {
           )}
         </dd>
       </dl>
+        <p className='text-sm'>Shipping and taxes calculated at checkout.</p>
       {children}
+      
+    </div>
     </div>
   );
 }
 
 function CartLineRemoveButton({lineIds}) {
   return (
+    <div className='cart-item-delete-button'>
     <CartForm
       route="/cart"
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button type="submit">&#128465;</button>
-      {/* <button type="submit" className='removeBtn'><img src='/trash-2.svg' /></button> */}
+      {/* <button type="submit">&#128465;</button> */}
+      <button type="submit" className='ml-3 mt-1 removeBtn'><img src='/trash-2.svg' /></button>
     </CartForm>
+    </div>
   );
 }
 
@@ -246,6 +178,7 @@ function CartLineQuantity({line}) {
       </CartLineUpdateButton>
 
       <small className='qtyBtn'>{quantity}</small>
+
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
           className='qtyBtn'
@@ -305,40 +238,6 @@ export function CartEmpty({hidden = false, layout = 'aside'}) {
     </div>
   );
 }
-
-// function CartDiscounts({discountCodes}) {
-//   const codes =
-//     discountCodes
-//       ?.filter((discount) => discount.applicable)
-//       ?.map(({code}) => code) || [];
-
-//   return (
-//     <div>
-//       {/* Have existing discount, display it with a remove option */}
-//       <dl hidden={!codes.length}>
-//         <div>
-//           <dt>Discount(s)</dt>
-//           <UpdateDiscountForm>
-//             <div className="cart-discount">
-//               <code>{codes?.join(', ')}</code>
-//               &nbsp;
-//               <button>Remove</button>
-//             </div>
-//           </UpdateDiscountForm>
-//         </div>
-//       </dl>
-
-//       {/* Show an input to apply a discount */}
-//       <UpdateDiscountForm discountCodes={codes}>
-//         <div>
-//           <input type="text" name="discountCode" placeholder="Discount code" />
-//           &nbsp;
-//           <button type="submit">Apply</button>
-//         </div>
-//       </UpdateDiscountForm>
-//     </div>
-//   );
-// }
 
 function UpdateDiscountForm({discountCodes, children}) {
   return (

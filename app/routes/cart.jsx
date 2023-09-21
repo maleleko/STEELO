@@ -3,6 +3,7 @@ import {Suspense} from 'react';
 import {CartForm} from '@shopify/hydrogen';
 import {json} from '@shopify/remix-oxygen';
 import {CartMain} from '~/components/Cart';
+import { CartMainDrawer } from '~/components/CartDrawer';
 
 export const meta = () => {
   return [{title: `Hydrogen | Cart`}];
@@ -102,7 +103,7 @@ export default function Cart() {
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await errorElement={<div>An error occurred</div>} resolve={cart}>
           {(cart) => {
-            return <CartMain layout="page" cart={cart} />;
+            return <CartMainDrawer layout="page" cart={cart} />;
           }}
         </Await>
       </Suspense>

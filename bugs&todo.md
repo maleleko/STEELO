@@ -53,7 +53,7 @@
 - add margin or padding to match layout for desktop view
 
 **cart drawer:**
-- realign items properly
+- realign items back to how they were before implementing cart page styling
 - fix cart summary overflow across all mobile devices
 
 **search drawer:**

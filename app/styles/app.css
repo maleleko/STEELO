@@ -308,53 +308,42 @@ aside li {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   height: auto;
   max-height: 100%;
-  /* max-height: var(--aside-height);
-  min-height: var(--aside-height); */
   width: 400px;
-  /* max-width: 200px;
-  min-width: 200px; */
-  /* max-width: var(--aside-width);
-  min-width: var(--aside-width); */
   position: fixed;
   right: 4rem;
   top: 0rem;
   transition: transform 200ms ease-in-out;
-  /* background-color: aqua; */
-  /* padding: 0 1rem; */
-  /* overflow-y: scroll; */
 }
 
-.cart-main {
+.cartDrawer ul {
+  padding: 0 2rem 0;
 }
 
-.cart-details {
-  /* padding: 2rem ; */
-  /* height: auto; */
-  /* display: flex; */
+.cart-list:last-child ul:last-child {
+  border-bottom: none;
+}
+
+.cartDrawer .cart-list-container {
+  height: auto;
+  max-height: 65vh;
+  overflow-y: auto;
+  /* border-bottom: #000 solid 1px; */
 }
 
 .cartDrawer .cart-list {
   display: block;
-  height: auto;
-  max-height: 65vh;
-  padding: 0rem 2rem 0rem;
-  margin: 0;
-  overflow-y: scroll;
-  /* text-align: center; */
-  /* height: auto; */
-  /* max-height: 100%; */
-  /* overflow-y: scroll; */
+  /* padding: 1.25rem 2rem; */
 }
 
-.cart-details ul::-webkit-scrollbar {
+.cartDrawer ul::-webkit-scrollbar {
   display: none;
 }
 
 .cart-line {
   display: flex;
-  padding: 1.25rem 0;
   z-index: 10;
   border-bottom: solid 1px #bdbdbd;
+  padding: 1.25rem 0;
 }
 
 .cart-lines {
@@ -398,12 +387,12 @@ aside li {
   /* width: calc(var(--aside-width) - 40px); */
 }
 
-.cart-line-quantiy {
-  /* position: relative;
-  top: -35px;
-  left: 15px; */
+.cartDrawer .cart-summary-cont {
+  padding: 0 2rem;
+}
+
+.cartDrawer .cart-line-quantiy {
   display: flex;
-  justify-content: center;
 }
 
 .cart-discount {
@@ -413,10 +402,16 @@ aside li {
 }
 
 .cart-subtotal {
-  padding: 0 1.5rem;
+  /* padding: 0 1.5rem; */
   align-items: center;
   display: flex;
   justify-content: space-between;
+}
+
+.cart-item-delete-button {
+  height: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .removeBtn {
@@ -489,12 +484,14 @@ aside li {
   max-width: 80vw;
   min-width: 65vw;
   margin: 0 auto;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   z-index: 1;
 }
 
 .mainContent .cart-main {
   width: 45vw;
+  /* overflow-y: auto; */
+  max-height: 80vh;
 }
 
 .mainContent .cart-list {
@@ -511,7 +508,7 @@ aside li {
   width: 50%;
 }
 
-.mainContent .cart-line-things {
+.mainContent .cart-line-info {
   display: flex;
   border-bottom: solid 1px #bdbdbd;
 }
@@ -542,6 +539,18 @@ aside li {
 
 .mainContent .viewCart{
   display: none;
+}
+
+.mainContent .cart-summary-page {
+  max-width: 500px;
+  width: 500px;
+  /* position: relative; */
+  /* position: absolute; */
+  position: fixed;
+  right: 10vw;
+  top: 25vh;
+  background-color: #bdbdbd;
+  /* padding: 1rem; */
 }
 
 

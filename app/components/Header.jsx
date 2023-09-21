@@ -1,11 +1,11 @@
 import {Await, NavLink, useMatches, Form} from '@remix-run/react';
-import {Suspense, useState, useEffect} from 'react';
+import React, {Suspense, useState, useEffect} from 'react';
 import {
   PredictiveSearchForm, PredictiveSearchResults,
 } from '~/components/Search';
 import {SearchToggle} from '~/components/SearchToggle';
 import '../styles/reset.css';
-// import { CartDrawer } from './CartDrawer';
+import { CartDrawer } from './CartDrawer';
 
 
 
@@ -132,7 +132,7 @@ function HeaderMenuMobileToggle() {
 function CartBadge({count}) {
 
     // implement actual state manipulation for cartDrawer.jsx
-    // cause this href method, stinks.
+    // cause this href method stinks.
   // const [showCartDrawer, setShowCartDrawer] = useState(false);
 
   // const toggleDrawer = () => {
@@ -156,19 +156,26 @@ function CartBadge({count}) {
     }
   }
 
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const toggleThis = () => {
+    setOpenDrawer(!openDrawer)
+    console.log('rendering')
+  }
+
   // return <div className='cartTesting' onClick={toggleDrawer} >
   //   <button><img src='/shopping-cart.svg' alt='Cart Icon'/></button>
   //   <p>{count}</p>
   //   {showCartDrawer && <CartDrawer />}
   // </div>
 
-  return <div className='cartTesting'>
-      <a href={cartHref} onClick={toggleCartDrawer}><img src="/shopping-cart.svg" alt="" /></a>
-      <a href={cartHref} onClick={toggleCartDrawer}><p className='text-xs'>{count}</p></a>
-    </div>
+  return <a href={cartHref} onClick={toggleCartDrawer}><div className='cartTesting'>
+    <img src="/shopping-cart.svg" alt=""/>
+    <p className='text-xs'>{count}</p>
+    </div></a>
 }
 
 function CartToggle({cart}) {
+  
   return (
     <Suspense fallback={<CartBadge count={0} />}>
       <Await resolve={cart}>

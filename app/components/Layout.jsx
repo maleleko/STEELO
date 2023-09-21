@@ -8,8 +8,8 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search';
+import { CartDrawer, CartMainDrawer } from './CartDrawer';
 import '../styles/app.css';
-import { CartDrawer } from './CartDrawer';
 
 export function Layout({cart, children = null, footer, header, isLoggedIn}) {
   return (
