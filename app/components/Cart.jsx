@@ -2,17 +2,30 @@ import {CartForm, Image, Money} from '@shopify/hydrogen';
 import {Link} from '@remix-run/react';
 import {useVariantUrl} from '~/utils';
 
+
+
+
 export function CartMain({layout, cart}) {
+  const cartHasItems = !!cart && cart.totalQuantity > 0
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&
     Boolean(cart.discountCodes.filter((code) => code.applicable).length);
   const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
 
+  
+
   return (
-    <div className={className}>
-      <CartEmpty hidden={linesCount} layout={layout} />
-      <CartDetails cart={cart} layout={layout} />
+    <div className='cartmaincontainer'>
+      <div className={className}>
+        <CartEmpty hidden={linesCount} layout={layout} />
+        <CartDetails cart={cart} layout={layout} />
+      </div>
+      {cartHasItems && (
+          <CartSummary cost={cart.cost} layout={layout}>
+            <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+          </CartSummary>
+        )}
     </div>
   );
 }
@@ -23,15 +36,21 @@ function CartDetails({layout, cart}) {
   return (
     <div className="cart-details">
       <CartLines lines={cart?.lines} layout={layout} />
-      {cartHasItems && (
+      {/* {cartHasItems && (
         <CartSummary cost={cart.cost} layout={layout}>
-          {/* <CartDiscounts discountCodes={cart.discountCodes} /> */}
           <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
         </CartSummary>
-      )}
+      )} */}
     </div>
   );
 }
+
+// {cartHasItems && (
+//   <CartSummary cost={cart.cost} layout={layout}>
+//     {/* <CartDiscounts discountCodes={cart.discountCodes} /> */}
+//     <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+//   </CartSummary>
+// )}
 
 function CartLines({lines, layout}) {
   if (!lines) return null;
@@ -90,41 +109,45 @@ function CartLineItem({layout, line}) {
                 </small>
               </li>
             ))}
+            {/* undecided if i want to put this here */}
+          <CartLinePrice line={line} />
           </ul>
-          <CartLinePrice line={line} as="span" />
-          <CartLineQuantity line={line} />
+          {/* <CartLinePrice line={line}  />
+          <CartLineQuantity line={line} /> */}
         </div>
       </li>
+
+      <div className='cart-line-qty'>
+        <CartLineQuantity line={line} />
+      </div>
+
+      <div className='cart-line-price'>
+          <CartLinePrice line={line} as="span" />
+      </div>
     </div>
   );
 }
 
-function CartCheckoutActions({checkoutUrl}) {
+export function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div className='mt-6'>
       <a href={checkoutUrl} target="_self">
         <p className='checkoutBtn uppercase'>Checkout  &rarr;</p>
       </a>
-      <br />
-
-      <a href="/cart">
-        <p className='viewCart'>VIEW CART</p>
-      </a>
-    </div>
   );
 }
 
 export function CartSummary({cost, layout, children = null}) {
+  
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
     <div className='cart-summary-cont'>
     <div aria-labelledby="cart-summary" className={className}>
-      <dl className="cart-subtotal">
-        <dt className='text-sm'>Subtotal:</dt>
+      <dl className="cart-subtotals">
+        <dt className='text-sm mb-2'>Subtotal:</dt>
         <dd className='text-sm'>
           {cost?.subtotalAmount?.amount ? (
             <Money data={cost?.subtotalAmount} />
@@ -133,7 +156,8 @@ export function CartSummary({cost, layout, children = null}) {
           )}
         </dd>
       </dl>
-        <p className='text-sm'>Shipping and taxes calculated at checkout.</p>
+        <p className='text-xs mb-1 text-gray-400'>Shipping and taxes calculated at checkout.</p>
+        <p className='text-xs mb-5 text-gray-400'>If you have a discount code, enter it at checkout.</p>
       {children}
       
     </div>
@@ -143,7 +167,7 @@ export function CartSummary({cost, layout, children = null}) {
 
 function CartLineRemoveButton({lineIds}) {
   return (
-    <div className='cart-item-delete-button'>
+    // <div className='cart-item-delete-button'>
     <CartForm
       route="/cart"
       action={CartForm.ACTIONS.LinesRemove}
@@ -152,7 +176,7 @@ function CartLineRemoveButton({lineIds}) {
       {/* <button type="submit">&#128465;</button> */}
       <button type="submit" className='ml-3 mt-1 removeBtn'><img src='/trash-2.svg' /></button>
     </CartForm>
-    </div>
+    // </div>
   );
 }
 

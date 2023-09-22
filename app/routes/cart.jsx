@@ -1,9 +1,17 @@
-import {Await, useMatches} from '@remix-run/react';
+import {Await, useMatches, useLoaderData, Link} from '@remix-run/react';
 import {Suspense} from 'react';
-import {CartForm} from '@shopify/hydrogen';
-import {json} from '@shopify/remix-oxygen';
+import {CartForm, Image, Money} from '@shopify/hydrogen';
+import {json, defer} from '@shopify/remix-oxygen';
 import {CartMain} from '~/components/Cart';
-import { CartMainDrawer } from '~/components/CartDrawer';
+
+export async function loader({context}) {
+  const {storefront} = context;
+  const {collections} = await storefront.query(FEATURED_COLLECTION_QUERY);
+  const featuredCollection = collections.nodes[0];
+  const recommendedProducts = storefront.query(RECOMMENDED_PRODUCTS_QUERY);
+
+  return defer({featuredCollection, recommendedProducts});
+}
 
 export const meta = () => {
   return [{title: `Hydrogen | Cart`}];
@@ -83,9 +91,12 @@ export async function action({request, context}) {
 
 export default function Cart() {
   const [root] = useMatches();
-  const cart = root.data?.cart;
+  const cartt = root.data?.cart;
+  const data = useLoaderData();;
 
   return (
+    <div className='containa'>
+
     <div className="cart">
       <h1 className='uppercase font-bold text-center'>Your Shopping Cart</h1>
       <div className='cartHeader'>
@@ -93,7 +104,7 @@ export default function Cart() {
         <p className='text-sm font-bold'>PRODUCT</p>
         </div>
         <div className='cart-header-label-qty'>
-        <p className='text-sm font-bold'>QTY</p>
+        <p className='text-sm font-bold'>QUANTITY</p>
         </div>
         <div className='cart-header-label-price'>
         <p className='text-sm font-bold'>PRICE</p>
@@ -101,13 +112,108 @@ export default function Cart() {
       </div>
       <div className='cartContainer'>
       <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await errorElement={<div>An error occurred</div>} resolve={cart}>
+        <Await errorElement={<div>An error occurred</div>} resolve={cartt}>
           {(cart) => {
-            return <CartMainDrawer layout="page" cart={cart} />;
+            return <CartMain layout="page" cart={cart} />;
           }}
         </Await>
       </Suspense>
       </div>
     </div>
+
+      <div>
+        <RecommendedProducts products={data.recommendedProducts} />
+      </div>
+    </div>
   );
 }
+
+function RecommendedProducts({products}) {
+  const data = useLoaderData();
+  return (
+    <div className="more-products mt-20">
+      <h2 className='mb-20'>MORE STEELO</h2>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Await resolve={products}>
+          {({products}) => (
+            <div className="recommended-products-grid">
+              {products.nodes.map((product) => (
+                <Link
+                  key={product.id}
+                  className="recommended-product"
+                  to={`/products/${product.handle}`}
+                >
+                  <Image
+                    data={product.images.nodes[0]}
+                    aspectRatio="1/1"
+                    sizes="(min-width: 25em) 10vw, 25vw"
+                  />
+                  <h4>{product.title}</h4>
+                  <small>
+                    <Money data={product.priceRange.minVariantPrice} />
+                  </small>
+                </Link>
+              ))}
+            </div>
+          )}
+        </Await>
+      </Suspense>
+      <br />
+    </div>
+  );
+}
+
+const FEATURED_COLLECTION_QUERY = `#graphql
+  fragment FeaturedCollection on Collection {
+    id
+    title
+    image {
+      id
+      url
+      altText
+      width
+      height
+    }
+    handle
+  }
+  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
+      nodes {
+        ...FeaturedCollection
+      }
+    }
+  }
+`;
+
+
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  fragment RecommendedProduct on Product {
+    id
+    title
+    handle
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    images(first: 1) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+      nodes {
+        ...RecommendedProduct
+      }
+    }
+  }
+`;

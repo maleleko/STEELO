@@ -4,9 +4,9 @@ import {Link} from '@remix-run/react';
 import {useVariantUrl} from '~/utils';
 
 
-// the only solution i could come up with for /cart url..
-// not dry at all.
-// plus this is inside the cartdrawer smh
+// the only solution i could come up with for cartdrawer component
+// just reuse the code from Cart.jsx into the cart drawer to get unique styling between /cart and CartDrawer
+// not dry at all, but it is what it is. 
 export function CartMainDrawer({layout, cart}) {
     const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
     const withDiscount =
@@ -96,17 +96,18 @@ export function CartMainDrawer({layout, cart}) {
                 </li>
             ))}
             </ul>
-
+                <CartLinePrice line={line}  />
+                <CartLineQuantity line={line} />
         </div>
         </li>
 
-            <div className='cart-line-qty'>
+            {/* <div className='cart-line-qty'>
                 <CartLineQuantity line={line} />
             </div>
 
             <div className='cart-line-price'>
                 <CartLinePrice line={line} as="span" />
-            </div>
+            </div> */}
     </div>
     );
     }
@@ -144,7 +145,7 @@ export function CartMainDrawer({layout, cart}) {
             )}
         </dd>
         </dl>
-        <p className='text-sm'>Shipping and taxes calculated at checkout.</p>
+        <p className='text-sm px-8'>Shipping and taxes calculated at checkout.</p>
         {children}
     </div>
     );
@@ -152,6 +153,7 @@ export function CartMainDrawer({layout, cart}) {
 
     function CartLineRemoveButton({lineIds}) {
     return (
+        <div className='cart-item-delete-button'>
     <CartForm
         route="/cart"
         action={CartForm.ACTIONS.LinesRemove}
@@ -160,6 +162,7 @@ export function CartMainDrawer({layout, cart}) {
         {/* <button type="submit">&#128465;</button> */}
         <button type="submit" className='ml-3 mt-1 removeBtn'><img src='/trash-2.svg' /></button>
     </CartForm>
+    </div>
     );
     }
 

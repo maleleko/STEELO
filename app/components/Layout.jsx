@@ -35,7 +35,7 @@ function CartAside({cart}) {
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
-            return <CartMain cart={cart} />;
+            return <CartMainDrawer cart={cart} />;
           }}
         </Await>
       </Suspense>

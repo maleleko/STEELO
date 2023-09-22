@@ -22,7 +22,9 @@
 - change "recommended products" to something else or just flat out remove it
 
 **cart page:**
-- add a recommended/most viewed product section so the cart page doesnt look so bare
+- ~~add a recommended/most viewed product section so the cart page doesnt look so bare~~
+- ~~change code layout from CartDrawer.jsx to Cart.jsx and vice versa~~
+- implement footer
 
 **product page**
 - make this look better
@@ -55,6 +57,8 @@
 **cart drawer:**
 - realign items back to how they were before implementing cart page styling
 - fix cart summary overflow across all mobile devices
+- fix weird overflow on li items
+- fix padding for cart-summary
 
 **search drawer:**
 - add proper dropdown animation
@@ -62,7 +66,9 @@
 - for mobile: add dropdown animation when search icon is clicked/tapped
 
 **cart page** 
+- ~~figure out how to make cart-summary div fixed within parent container~~
 - 1024px or below, pretty much recreate cart drawer layout but still have the cart summary on the side
 - 768px or below, move cart-summary to the bottom of the page
+- style recommended products div
 
 
