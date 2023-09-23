@@ -53,12 +53,13 @@
 
 **navbar:**
 - add margin or padding to match layout for desktop view
+- fix weird issues with mobile viewportScale
 
 **cart drawer:**
-- realign items back to how they were before implementing cart page styling
+- ~~realign items back to how they were before implementing cart page styling~~
 - fix cart summary overflow across all mobile devices
 - fix weird overflow on li items
-- fix padding for cart-summary
+- ~~fix padding for cart-summary~~
 
 **search drawer:**
 - add proper dropdown animation
@@ -67,8 +68,9 @@
 
 **cart page** 
 - ~~figure out how to make cart-summary div fixed within parent container~~
-- 1024px or below, pretty much recreate cart drawer layout but still have the cart summary on the side
-- 768px or below, move cart-summary to the bottom of the page
+- ~~1024px or below, pretty much recreate cart drawer layout but still have the cart summary on the side~~
+- ~~768px or below, move cart-summary to the bottom of the page~~
 - style recommended products div
+- for mobile, figure out how to make cart-summary width stay consistent but shrink cart-main width
 
 

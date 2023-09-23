@@ -111,6 +111,7 @@ function CartLineItem({layout, line}) {
             ))}
             {/* undecided if i want to put this here */}
           <CartLinePrice line={line} />
+          <CartLineQuantity line={line} />
           </ul>
           {/* <CartLinePrice line={line}  />
           <CartLineQuantity line={line} /> */}
@@ -174,7 +175,7 @@ function CartLineRemoveButton({lineIds}) {
       inputs={{lineIds}}
     >
       {/* <button type="submit">&#128465;</button> */}
-      <button type="submit" className='ml-3 mt-1 removeBtn'><img src='/trash-2.svg' /></button>
+      <button type="submit" className='ml-3 mt-1 removeBtn'><img className='trash' src='/trash-2.svg' /></button>
     </CartForm>
     // </div>
   );
