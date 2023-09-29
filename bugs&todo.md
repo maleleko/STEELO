@@ -18,7 +18,9 @@
 
 **index:**
 - implement footer section
-- implement more "collections" | griptape, hats, shirts, sweaters
+- ~~implement more "collections" | griptape, hats, shirts, sweaters~~
+- implement onHover for desktop view to show collection title and collection description
+- figure out how to implement a "best sellers/most popular" product list
 - change "recommended products" to something else or just flat out remove it
 
 **cart page:**

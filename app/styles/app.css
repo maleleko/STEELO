@@ -237,7 +237,7 @@ aside li {
 * --------------------------------------------------
 */
 .footer {
-  background: var(--color-dark);
+  background: #bdbdbd;
   margin-top: auto;
 }
 
@@ -254,7 +254,7 @@ aside li {
 }
 
 .footer-menu a {
-  color: var(--color-light);
+  color: #000;
 }
 
 /*
@@ -793,6 +793,16 @@ aside li {
 
 .recommended-product img {
   height: auto;
+}
+
+.indexContainer {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.hovered h1,
+.hovered p {
+  display: block;
 }
 
 /*
